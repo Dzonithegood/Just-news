@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.*
 import com.example.justnews.models.Article
 
-//Data classes for Room always have to be abstract, and we anotate it with database to tell room that this is our database class.
+//Data classes for Room always have to be abstract, and we annotate it with database to tell room that this is our database class.
 @Database(
     //we only have one entity because we have one single table ( article table ), also define a version, is used to update our database later on.
     entities = [Article::class],

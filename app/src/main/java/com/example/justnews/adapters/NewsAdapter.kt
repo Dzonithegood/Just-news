@@ -21,7 +21,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     inner class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     //we should always implement recyclerview adapters with diffUtil, calculates the differences between the two lists, and enables us to only update those items that are different.
-//And this happens in background so i don't block my main thread with that.
+    //And this happens in background so i don't block my main thread with that.
     private val differCallback = object : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
             return oldItem.url == newItem.url
@@ -31,7 +31,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
             return oldItem == newItem
         }
     }
-
+    //Listdiffer is the tool that will take our two lists and compares them for differences, its async so it will run in the background.
     val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder( parent: ViewGroup, viewType: Int): NewsAdapter.ArticleViewHolder {
@@ -44,7 +44,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
                 )
         )
     }
-
+    //Getting the item count directly from listDiffer
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
@@ -57,12 +57,13 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
             tvTitle.text = article.title
             tvDescription.text = article.description
             tvPublishedAt.text = article.publishedAt
+            //Calling click listener from bellow
             setOnClickListener{
                 onItemClickListener?.let { it(article) }
             }
         }
     }
-
+    //Setting the article click listener, managing item click outside news adapter
     private var onItemClickListener: ((Article)-> Unit)? = null
 
     fun setOnItemClickListener(listener: (Article)->Unit) {
