@@ -14,9 +14,11 @@ class NewsViewModel(
 ) : ViewModel() {
 
     val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-
     //Breaking page needs to be defined in the view model because if i set this in the fragment it will be resseted everytime configuration ( rotation ) changes, and view model survives these changes.
     val breakingNewsPage = 1
+
+    val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    val searchNewsPage = 1
 
     init {
         getBreakingNews("us")
@@ -36,6 +38,13 @@ class NewsViewModel(
         //Here i post respond success or error state
         breakingNews.postValue(handleBreakingNewsResponse(response))
     }
+
+    fun searchNews(searchQuery: String) = viewModelScope.launch {
+        searchNews.postValue(Resource.Loading())
+        val response = newsRepository.searchNews(searchQuery,searchNewsPage)
+        searchNews.postValue(handleSearchNewsResponse(response))
+    }
+
 //This function will decide whether or not we want to emit the success state or the error state of the breakingNewsData.
     private fun handleBreakingNewsResponse(response : Response<NewsResponse>) : Resource<NewsResponse> {
         if(response.isSuccessful) {
@@ -44,6 +53,15 @@ class NewsViewModel(
             }
         }
     return Resource.Error(response.message())
+    }
+
+    private fun handleSearchNewsResponse(response : Response<NewsResponse>) : Resource<NewsResponse> {
+        if(response.isSuccessful) {
+            response.body()?.let{ resultResponse ->
+                return Resource.Success(resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
     }
 
 }
