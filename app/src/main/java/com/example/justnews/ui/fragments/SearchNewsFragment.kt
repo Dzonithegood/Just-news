@@ -4,6 +4,7 @@ import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.justnews.R
 import com.example.justnews.adapters.NewsAdapter
@@ -29,6 +30,20 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
 
         viewModel = (activity as NewsActivity).viewModel
         setupRecyclerView()
+
+        //Safeargs from the navigation components library, witch will enable me to pass arguments to transitions from one fragment to another.Article class is not a primitive data class like int or float,
+        //then we need tyo mark that class as serializable, witch then tells kotlin that we want to be able to pass this class between several fragments with the navigation components.
+        
+
+        newsAdapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("article", it)
+            }
+            findNavController().navigate(
+                R.id.action_searchNewsFragment_to_articleFragment,
+                bundle
+            )
+        }
 
 //Adding delay when searching for news, it can be done easily with coroutines, we ll add a coroutine job in a variable
         var job : Job? = null
