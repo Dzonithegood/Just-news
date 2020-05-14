@@ -6,6 +6,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.justnews.R
 import com.example.justnews.ui.NewsActivity
 import com.example.justnews.ui.NewsViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_article.*
 
 class ArticleFragment : Fragment(R.layout.fragment_article) {
@@ -28,6 +29,16 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
             webViewClient = WebViewClient()
             loadUrl(article.url)
         }
+
+        //Call floating action button
+
+       fab.setOnClickListener{
+           viewModel.saveArticle(article)
+           //adding snackBar to notify the user that that is saved
+           Snackbar.make(view, "Article saved successfully",Snackbar.LENGTH_SHORT).show()
+       }
+        //now we should observe our changes in the database in our SavedNewsFragment, we go there
+
     }
 }
 

@@ -3,6 +3,7 @@ package com.example.justnews.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.justnews.models.Article
 import com.example.justnews.models.NewsResponse
 import com.example.justnews.repository.NewsRepository
 import com.example.justnews.util.Resource
@@ -62,6 +63,18 @@ class NewsViewModel(
             }
         }
         return Resource.Error(response.message())
+    }
+
+//Adding functions here so that fragments can actually call these. So simply we took functions from article dao and implemented them in news repository and news viewModel
+
+    fun saveArticle(article: Article) = viewModelScope.launch {
+        newsRepository.upsert(article)
+    }
+
+    fun getSavedNews() = newsRepository.getSavedNews()
+
+    fun deleteArticle(article: Article) = viewModelScope.launch {
+        newsRepository.deleteArticle(article)
     }
 
 }
