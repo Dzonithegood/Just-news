@@ -8,7 +8,7 @@ import com.example.justnews.models.Article
 @Database(
     //we only have one entity because we have one single table ( article table ), also define a version, is used to update our database later on.
     entities = [Article::class],
-    version = 1
+    version = 2
 )
     //Here is how to tell my database to use converters of data that i defined in Converters class
 @TypeConverters(Converters::class)
@@ -33,7 +33,8 @@ abstract class ArticleDatabase : RoomDatabase() {
                 context.applicationContext,
                 ArticleDatabase::class.java,
                 "article_db.db"
-            ).build()
+            ).fallbackToDestructiveMigration()
+                .build()
         //Instance of this database class will then be used to access getArticleDao, witch is used to access actual database functions
     }
 }

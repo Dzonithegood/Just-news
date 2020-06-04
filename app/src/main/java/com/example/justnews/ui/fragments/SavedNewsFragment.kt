@@ -1,5 +1,6 @@
 import android.os.Bundle
 import android.view.View
+import android.widget.AbsListView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -10,7 +11,9 @@ import com.example.justnews.R
 import com.example.justnews.adapters.NewsAdapter
 import com.example.justnews.ui.NewsActivity
 import com.example.justnews.ui.NewsViewModel
+import com.example.justnews.util.Constants
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_breaking_news.*
 import kotlinx.android.synthetic.main.fragment_saved_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.*
 

@@ -15,14 +15,14 @@ data class Article(
     @PrimaryKey(autoGenerate = true )
     var id: Int? = null,
 
-    val author: String,
-    val content: String,
-    val description: String,
-    val publishedAt: String,
-    val source: Source,
-    val title: String,
-    val url: String,
-    val urlToImage: String
+    val author: String?,
+    val content: String?,
+    val description: String?,
+    val publishedAt: String?,
+    val source: Source?,
+    val title: String?,
+    val url: String?,
+    val urlToImage: String?
 ) : Serializable
 //then we need to mark that class inherit  as serializable, witch then tells kotlin that we want to be able to pass this class between several fragments with the navigation components.
 //after this we have to declare this article in the nav graph ( res folder ), click on article fragment and there is a tab arguments. we add argument, give it a name and define a type serializable,

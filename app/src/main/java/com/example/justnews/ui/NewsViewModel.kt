@@ -16,10 +16,14 @@ class NewsViewModel(
 
     val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     //Breaking page needs to be defined in the view model because if i set this in the fragment it will be resseted everytime configuration ( rotation ) changes, and view model survives these changes.
-    val breakingNewsPage = 1
+    var breakingNewsPage = 1
+    //////
+    var breakingNewsResponse : NewsResponse?= null
 
     val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    val searchNewsPage = 1
+    var searchNewsPage = 1
+    //////
+    var searchNewsResponse : NewsResponse?= null
 
     init {
         getBreakingNews("us")
@@ -50,16 +54,37 @@ class NewsViewModel(
     private fun handleBreakingNewsResponse(response : Response<NewsResponse>) : Resource<NewsResponse> {
         if(response.isSuccessful) {
             response.body()?.let{ resultResponse ->
-                return Resource.Success(resultResponse)
+     //Now we are modifying this response so that the first thing we do when we get this we want to increase the response, increasing the page number by one every time we get a response
+                breakingNewsPage++
+     //Because it is set to null initially we have to check this, if it is our first response ever then we will set our breaking news response to a result response
+                if (breakingNewsResponse == null) {
+                    breakingNewsResponse = resultResponse
+     //If we loaded more than one page already then we simply want to get more articles
+                } else {
+                    //because initially we have set article list to be just a list we cannot add new articles, but we can change this when we go back in newsResponse and set it to mutable list
+                    val oldArticles = breakingNewsResponse?.articles
+                    val newArticles = resultResponse.articles
+                    oldArticles?.addAll(newArticles)
+                }
+
+                return Resource.Success(breakingNewsResponse?: resultResponse)
             }
         }
     return Resource.Error(response.message())
     }
-
+//Copied the whole function from private fun handleBreakingNewsResponse
     private fun handleSearchNewsResponse(response : Response<NewsResponse>) : Resource<NewsResponse> {
         if(response.isSuccessful) {
             response.body()?.let{ resultResponse ->
-                return Resource.Success(resultResponse)
+                searchNewsPage++
+                if (searchNewsResponse == null) {
+                    searchNewsResponse = resultResponse
+                } else {
+                    val oldArticles = searchNewsResponse?.articles
+                    val newArticles = resultResponse.articles
+                    oldArticles?.addAll(newArticles)
+                }
+                return Resource.Success(searchNewsResponse?: resultResponse)
             }
         }
         return Resource.Error(response.message())
