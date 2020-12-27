@@ -3,7 +3,7 @@ package com.example.justnews.repository
 import com.example.justnews.api.RetrofitInstance
 import com.example.justnews.db.ArticleDatabase
 import com.example.justnews.models.Article
-
+//checking
 class NewsRepository (
     val db : ArticleDatabase
     ){
