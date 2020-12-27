@@ -7,15 +7,15 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-//Retrofit singleton class that enables me to make requests from everywhere in my code
+//Retrofit singleton class enables me to make requests from everywhere in my code, i have to create this after i created NewsAPI interface
 
 class RetrofitInstance {
 
     companion object{
         //  lazy means that i initialize this affected by curly brackets only once
         private val retrofit by lazy {
-        // for logging responses of retrofit, very usefull for debuging
-        // Attaching this to a retrofit object to be able to see with requests i am actualy making and what the responses are
+        // for logging responses of retrofit, very usefull for debuging, we have included a dependency
+        // Attaching this to a retrofit object to be able to see which requests i am actually making and what the responses are
             val logging = HttpLoggingInterceptor()
             logging.setLevel(HttpLoggingInterceptor.Level.BODY)
         //Logging interceptor that i defined i now need to pass on to a client that i will in next line pass to a Retrofit instance

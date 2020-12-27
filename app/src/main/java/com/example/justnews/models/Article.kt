@@ -6,7 +6,8 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 
-
+//To be able to save article in our database we have to annotate it with a @Entity, and this tells android studio that this article class is a table in our database Article will be the whole table, and that table has several
+//columns
 @Entity(
     tableName = "articles"
 )

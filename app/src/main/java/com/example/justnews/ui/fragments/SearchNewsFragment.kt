@@ -37,7 +37,7 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
         setupRecyclerView()
 
         //Safeargs from the navigation components library, witch will enable me to pass arguments to transitions from one fragment to another.Article class is not a primitive data class like int or float,
-        //then we need tyo mark that class as serializable, witch then tells kotlin that we want to be able to pass this class between several fragments with the navigation components.
+        //then we need to mark that class as serializable, which then tells kotlin that we want to be able to pass this class between several fragments with the navigation components.
         
 
         newsAdapter.setOnItemClickListener {

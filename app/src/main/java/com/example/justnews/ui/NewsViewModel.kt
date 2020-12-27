@@ -11,6 +11,8 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class NewsViewModel(
+    //We cannot use constructor parameters by default for our view models, if we want to do that, here we need that because we need our newsrepository in our view model then
+    //we need to create a view model provider factory how our own view model should be created.
     val newsRepository: NewsRepository
 ) : ViewModel() {
 
@@ -37,7 +39,7 @@ class NewsViewModel(
         //Before making the network call i want to emit the loading state to live data,
         // because we are about to make the network call so we should emit that loading state so our fragment can handle that.
         breakingNews.postValue(Resource.Loading())
-        //Now I can make a actual response, this is a suspend function i can see that because i have an arrow on the left next to the 30,
+        //Now I can make a actual response, this is a suspend function i can see that because i have an arrow on the left next to the 44,
         // and when that function is finished the coroutine will just continue to the next line.
         val response = newsRepository.getBreakingNews(countryCode, breakingNewsPage)
         //Here i post respond success or error state

@@ -3,7 +3,7 @@ package com.example.justnews.db
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.justnews.models.Article
-
+//We have to anotate this interface with Dao so that Room knows that these are all our functions are defined within this interface.
 @Dao
 interface ArticleDao {
 

@@ -4,7 +4,7 @@ import androidx.room.TypeConverter
 import com.example.justnews.models.Source
 
 
-//Here we are defining how to handle different data types, because inside our article class we have int, string, and here we ahave a specific source class that has its own two variables inside.
+//Here we are defining how to handle different data types, because inside our article class we have int, string, and here we have a specific source class that has its own two variables inside.
 class Converters {
     //To tell room that this is a converter function we need to annotate this with TypeConverters
     @TypeConverter
